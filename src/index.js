@@ -20,7 +20,7 @@ class Board extends React.Component {
   render() {
     const boardRows = [];
     for (let i = 0; i < 3; i++) {
-      let squares =[];
+      let squares = [];
       for (let j = 0; j < 3; j++) {
         squares.push(this.renderSquare(3*i+j));
       }
@@ -38,6 +38,7 @@ class Game extends React.Component {
         move: null,
         squares: Array(9).fill(null),
       }],
+      sortMovesDesc: true,
       stepNumber: 0,
       xIsNext: true,
     };
@@ -87,6 +88,14 @@ class Game extends React.Component {
       );
     })
 
+    const sortOrder = <button onClick={() => 
+            this.setState({sortMovesDesc: !this.state.sortMovesDesc})}>
+      {'Sort (' + (this.state.sortMovesDesc ? '^' : 'v') + ')'}
+    </button>
+
+    const sortedMoves = this.state.sortMovesDesc ? 
+                            moves.reverse() : moves;
+
     let status;
     if (winner) {
       status = 'Winner: ' + winner;
@@ -104,7 +113,9 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{moves}</ol>
+          <br />
+          <div>{sortOrder}</div>
+          <ol>{sortedMoves}</ol>
         </div>
       </div>
     );
