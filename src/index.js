@@ -18,25 +18,15 @@ class Board extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
-    );
+    const boardRows = [];
+    for (let i = 0; i < 3; i++) {
+      let squares =[];
+      for (let j = 0; j < 3; j++) {
+        squares.push(this.renderSquare(3*i+j));
+      }
+      boardRows.push(<div className="board-row">{squares}</div>);
+    }
+    return <div>{boardRows}</div>;
   }
 }
 
@@ -88,7 +78,7 @@ class Game extends React.Component {
       const player = (move % 2) ? 'X' : 'O';
       const location = getLocation(step.move);
       const desc = move ? player + ' ' + location : 'Game start';
-      const selected = this.state.stepNumber == move ?
+      const selected = this.state.stepNumber === move ?
                             'selected' : '';
       return (
         <li key={move}>
